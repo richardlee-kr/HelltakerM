@@ -2,10 +2,16 @@ package com.example.floatingwidget;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,10 +22,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class WidgetService extends Service {
 
@@ -27,8 +38,11 @@ public class WidgetService extends Service {
     View mFloatingView;
     WindowManager windowManager;
     ImageView imageClose;
-    TextView tvWidget;
+    ImageView imageGIF;
     float height, width;
+
+    static int counter = 0;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -38,7 +52,7 @@ public class WidgetService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) //if current version is higher than Oreo
         {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         }
@@ -62,40 +76,43 @@ public class WidgetService extends Service {
         layoutParams.x = 0;
         layoutParams.y = 100;
 
-        //layout parmas for close button
-        WindowManager.LayoutParams imageParames = new WindowManager.LayoutParams(140,
+        //layout params for close button
+        WindowManager.LayoutParams imageParams = new WindowManager.LayoutParams(140,
                 140,
                 LAYOUT_FLAG,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
-        imageParames.gravity = Gravity.BOTTOM|Gravity.CENTER;
-        imageParames.y = 100;
+        imageParams.gravity = Gravity.BOTTOM|Gravity.CENTER;
+        imageParams.y = 100;
 
         windowManager = (WindowManager)getSystemService(WINDOW_SERVICE);
         imageClose = new ImageView(this);
         imageClose.setImageResource(R.drawable.close_white);
         imageClose.setVisibility(View.INVISIBLE);
-        windowManager.addView(imageClose, imageParames);
+        windowManager.addView(imageClose, imageParams);
         windowManager.addView(mFloatingView, layoutParams);
         mFloatingView.setVisibility(View.VISIBLE);
 
         height = windowManager.getDefaultDisplay().getHeight();
         width = windowManager.getDefaultDisplay().getWidth();
 
-        tvWidget = (TextView)mFloatingView.findViewById(R.id.text_widget);
+        imageGIF = (ImageView)mFloatingView.findViewById((R.id.gif_image));
+        Glide.with(WidgetService.this).load(R.raw.cerberus_150).into(imageGIF);
+
+
 
         //show&update current time in textview
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                tvWidget.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()));
+                //tvWidget.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()));
                 handler.postDelayed(this,1000);
             }
         }, 10);
 
         //drag movement for widget
-        tvWidget.setOnTouchListener(new View.OnTouchListener() {
+        imageGIF.setOnTouchListener(new View.OnTouchListener() {
             int initialX, initialY;
             float initialTouchX, initialTouchY;
             long startClickTime;
@@ -128,7 +145,7 @@ public class WidgetService extends Service {
 
                         if(clickDuration < MAX_CLICK_DURATION)
                         {
-                            Toast.makeText(WidgetService.this, "Time: "+tvWidget.getText().toString(),Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(WidgetService.this, "Time: "+tvWidget.getText().toString(),Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -162,6 +179,7 @@ public class WidgetService extends Service {
 
         return START_STICKY;
     }
+
 
     @Override
     public void onDestroy() {

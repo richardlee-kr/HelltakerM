@@ -15,31 +15,31 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button buttonAddWidget;
+    Button buttonAddWidget; //Buttono to Add Widget
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        buttonAddWidget = (Button) findViewById(R.id.button_widget);
+        buttonAddWidget = (Button) findViewById(R.id.button_widget); //find the button in layout
 
 
-        getPermission();
+        getPermission(); //try to get overlay permission
 
-        buttonAddWidget.setOnClickListener(new View.OnClickListener() {
+        buttonAddWidget.setOnClickListener(new View.OnClickListener() { //Button Click Event
             @Override
             public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if(!Settings.canDrawOverlays(MainActivity.this))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //if current version is higher than Marshmallow (6.0)
+                    if(!Settings.canDrawOverlays(MainActivity.this)) //if no overlay permission
                     {
-                        getPermission();
+                        getPermission(); //try to get overlay permission
                     }
-                    else
+                    else //if overlay permission
                     {
-                        Intent intent = new Intent(MainActivity.this, WidgetService.class);
-                        startService(intent);
-                        finish();
+                        Intent intent = new Intent(MainActivity.this, WidgetService.class); //create intent of WidgetService
+                        startService(intent); //start Widget
+                        finish(); //end MainActivity
                     }
                 }
             }
@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
     public void getPermission()
     {
         //check for alert window permission
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M && !Settings.canDrawOverlays(this))
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) //if current version is higher than Marshmallow and on overlay permission
         {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:"+getPackageName()));
-            startActivityForResult(intent, 1);
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:"+getPackageName())); //create permission allow window
+            startActivityForResult(intent, 1); //show allow window
         }
     }
 

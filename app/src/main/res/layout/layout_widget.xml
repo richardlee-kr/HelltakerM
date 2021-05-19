@@ -7,16 +7,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_margin="30dp">
+        android:layout_margin="30dp"/>
 
-        <TextView
-            android:id="@+id/text_widget"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:background="@drawable/cerberus"
-            android:gravity="center|top"
-            android:text="time"
-            android:textColor="#000000"
-            android:textSize="22dp" />
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/gif_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
 </RelativeLayout>

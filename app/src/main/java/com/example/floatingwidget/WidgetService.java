@@ -2,6 +2,8 @@ package com.example.floatingwidget;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -29,6 +32,9 @@ public class WidgetService extends Service {
     float height, width;
 
     static int counter = 0;
+
+    volatile int duration = 30;
+    Animation anim;
 
     @Nullable
     @Override
@@ -83,8 +89,18 @@ public class WidgetService extends Service {
         height = windowManager.getDefaultDisplay().getHeight();
         width = windowManager.getDefaultDisplay().getWidth();
 
+
         img = (ImageView)mFloatingView.findViewById((R.id.gif_image));
-        ani_image = (AnimationDrawable) img.getDrawable();
+        ani_image = new AnimationDrawable();
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.cerberus);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
+
+        img.setBackgroundDrawable(ani_image);
         ani_image.start();
         //Glide.with(WidgetService.this).load(R.raw.cerberus_150).into(imageGIF);
 

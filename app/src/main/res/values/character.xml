@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="cerberus">
+        <item>@drawable/cerberus01</item>
+        <item>@drawable/cerberus02</item>
+        <item>@drawable/cerberus03</item>
+        <item>@drawable/cerberus04</item>
+        <item>@drawable/cerberus05</item>
+        <item>@drawable/cerberus06</item>
+        <item>@drawable/cerberus07</item>
+        <item>@drawable/cerberus08</item>
+        <item>@drawable/cerberus09</item>
+        <item>@drawable/cerberus10</item>
+        <item>@drawable/cerberus11</item>
+        <item>@drawable/cerberus12</item>
+    </array>
+</resources>

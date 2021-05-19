@@ -2,35 +2,21 @@ package com.example.floatingwidget;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.bumptech.glide.Glide;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class WidgetService extends Service {
 
@@ -38,7 +24,8 @@ public class WidgetService extends Service {
     View mFloatingView;
     WindowManager windowManager;
     ImageView imageClose;
-    ImageView imageGIF;
+    ImageView img;
+    AnimationDrawable ani_image;
     float height, width;
 
     static int counter = 0;
@@ -96,10 +83,22 @@ public class WidgetService extends Service {
         height = windowManager.getDefaultDisplay().getHeight();
         width = windowManager.getDefaultDisplay().getWidth();
 
-        imageGIF = (ImageView)mFloatingView.findViewById((R.id.gif_image));
-        Glide.with(WidgetService.this).load(R.raw.cerberus_150).into(imageGIF);
+        img = (ImageView)mFloatingView.findViewById((R.id.gif_image));
+        ani_image = (AnimationDrawable) img.getDrawable();
+        ani_image.start();
+        //Glide.with(WidgetService.this).load(R.raw.cerberus_150).into(imageGIF);
 
 
+//        TimerTask tt = new TimerTask() {
+//            @Override
+//            public void run() {
+//                //Log.e("count: ", String.valueOf(counter));
+//                counter++;
+//            }
+//        };
+//
+//        Timer timer = new Timer();
+//        timer.schedule(tt,0,100);
 
         //show&update current time in textview
         Handler handler = new Handler();
@@ -112,7 +111,7 @@ public class WidgetService extends Service {
         }, 10);
 
         //drag movement for widget
-        imageGIF.setOnTouchListener(new View.OnTouchListener() {
+        img.setOnTouchListener(new View.OnTouchListener() {
             int initialX, initialY;
             float initialTouchX, initialTouchY;
             long startClickTime;

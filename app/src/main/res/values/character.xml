@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <array name="azazel">
+        <item>@drawable/azazel01</item>
+        <item>@drawable/azazel02</item>
+        <item>@drawable/azazel03</item>
+        <item>@drawable/azazel04</item>
+        <item>@drawable/azazel05</item>
+        <item>@drawable/azazel06</item>
+        <item>@drawable/azazel07</item>
+        <item>@drawable/azazel08</item>
+        <item>@drawable/azazel09</item>
+        <item>@drawable/azazel10</item>
+        <item>@drawable/azazel11</item>
+        <item>@drawable/azazel12</item>
+    </array>
     <array name="cerberus">
         <item>@drawable/cerberus01</item>
         <item>@drawable/cerberus02</item>
@@ -13,5 +27,117 @@
         <item>@drawable/cerberus10</item>
         <item>@drawable/cerberus11</item>
         <item>@drawable/cerberus12</item>
+    </array>
+    <array name="judgement">
+        <item>@drawable/judgement01</item>
+        <item>@drawable/judgement02</item>
+        <item>@drawable/judgement03</item>
+        <item>@drawable/judgement04</item>
+        <item>@drawable/judgement05</item>
+        <item>@drawable/judgement06</item>
+        <item>@drawable/judgement07</item>
+        <item>@drawable/judgement08</item>
+        <item>@drawable/judgement09</item>
+        <item>@drawable/judgement10</item>
+        <item>@drawable/judgement11</item>
+        <item>@drawable/judgement12</item>
+    </array>
+    <array name="justice">
+        <item>@drawable/justice01</item>
+        <item>@drawable/justice02</item>
+        <item>@drawable/justice03</item>
+        <item>@drawable/justice04</item>
+        <item>@drawable/justice05</item>
+        <item>@drawable/justice06</item>
+        <item>@drawable/justice07</item>
+        <item>@drawable/justice08</item>
+        <item>@drawable/justice09</item>
+        <item>@drawable/justice10</item>
+        <item>@drawable/justice11</item>
+        <item>@drawable/justice12</item>
+    </array>
+    <array name="lucifer">
+        <item>@drawable/lucy01</item>
+        <item>@drawable/lucy02</item>
+        <item>@drawable/lucy03</item>
+        <item>@drawable/lucy04</item>
+        <item>@drawable/lucy05</item>
+        <item>@drawable/lucy06</item>
+        <item>@drawable/lucy07</item>
+        <item>@drawable/lucy08</item>
+        <item>@drawable/lucy09</item>
+        <item>@drawable/lucy10</item>
+        <item>@drawable/lucy11</item>
+        <item>@drawable/lucy12</item>
+    </array>
+    <array name="lucifer_apron">
+        <item>@drawable/lucy_apron01</item>
+        <item>@drawable/lucy_apron02</item>
+        <item>@drawable/lucy_apron03</item>
+        <item>@drawable/lucy_apron04</item>
+        <item>@drawable/lucy_apron05</item>
+        <item>@drawable/lucy_apron06</item>
+        <item>@drawable/lucy_apron07</item>
+        <item>@drawable/lucy_apron08</item>
+        <item>@drawable/lucy_apron09</item>
+        <item>@drawable/lucy_apron10</item>
+        <item>@drawable/lucy_apron11</item>
+        <item>@drawable/lucy_apron12</item>
+    </array>
+    <array name="malina">
+        <item>@drawable/malina01</item>
+        <item>@drawable/malina02</item>
+        <item>@drawable/malina03</item>
+        <item>@drawable/malina04</item>
+        <item>@drawable/malina05</item>
+        <item>@drawable/malina06</item>
+        <item>@drawable/malina07</item>
+        <item>@drawable/malina08</item>
+        <item>@drawable/malina09</item>
+        <item>@drawable/malina10</item>
+        <item>@drawable/malina11</item>
+        <item>@drawable/malina12</item>
+    </array>
+    <array name="modeus">
+        <item>@drawable/modeus01</item>
+        <item>@drawable/modeus02</item>
+        <item>@drawable/modeus03</item>
+        <item>@drawable/modeus04</item>
+        <item>@drawable/modeus05</item>
+        <item>@drawable/modeus06</item>
+        <item>@drawable/modeus07</item>
+        <item>@drawable/modeus08</item>
+        <item>@drawable/modeus09</item>
+        <item>@drawable/modeus10</item>
+        <item>@drawable/modeus11</item>
+        <item>@drawable/modeus12</item>
+    </array>
+    <array name="pandemonica">
+        <item>@drawable/pandemonica01</item>
+        <item>@drawable/pandemonica02</item>
+        <item>@drawable/pandemonica03</item>
+        <item>@drawable/pandemonica04</item>
+        <item>@drawable/pandemonica05</item>
+        <item>@drawable/pandemonica06</item>
+        <item>@drawable/pandemonica07</item>
+        <item>@drawable/pandemonica08</item>
+        <item>@drawable/pandemonica09</item>
+        <item>@drawable/pandemonica10</item>
+        <item>@drawable/pandemonica11</item>
+        <item>@drawable/pandemonica12</item>
+    </array>
+    <array name="zdrada">
+        <item>@drawable/zdrada01</item>
+        <item>@drawable/zdrada02</item>
+        <item>@drawable/zdrada03</item>
+        <item>@drawable/zdrada04</item>
+        <item>@drawable/zdrada05</item>
+        <item>@drawable/zdrada06</item>
+        <item>@drawable/zdrada07</item>
+        <item>@drawable/zdrada08</item>
+        <item>@drawable/zdrada09</item>
+        <item>@drawable/zdrada10</item>
+        <item>@drawable/zdrada11</item>
+        <item>@drawable/zdrada12</item>
     </array>
 </resources>

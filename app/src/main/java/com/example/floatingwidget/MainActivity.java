@@ -8,10 +8,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Build;
 import android.provider.Settings;
-import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,9 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
     SeekBar frame_bar; //frame speed controller
     TextView frame_text; //frame speed text
+
+    Spinner character_select; //dropdown menu
+
     Button addButtonWidget; //Button to Add Widget
 
     int frameSpeed = 30;
+    String character = "Lucifer";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
         frame_bar = (SeekBar) findViewById(R.id.frame_speed);
         frame_text = (TextView) findViewById(R.id.frame_speed_text);
+
+        character_select = (Spinner) findViewById(R.id.character_list);
+
         addButtonWidget = (Button) findViewById(R.id.button_widget); //find the button in layout
 
         frame_bar.incrementProgressBy(1);
@@ -58,6 +66,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        character_select.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                character = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         addButtonWidget.setOnClickListener(new View.OnClickListener() { //Button Click Event
             @Override
             public void onClick(View view) {
@@ -70,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         Intent intent = new Intent(MainActivity.this, WidgetService.class); //create intent of WidgetService
                         intent.putExtra("speed", frameSpeed); //frame Speed transmit
+                        intent.putExtra("character", character);
                         startService(intent); //start Widget
                         finish(); //end MainActivity
                     }

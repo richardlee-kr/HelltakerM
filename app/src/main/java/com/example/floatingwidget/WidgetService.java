@@ -10,6 +10,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,6 +36,7 @@ public class WidgetService extends Service {
     float height, width;
 
     int duration = 25;
+    String selected;
 
     @Nullable
     @Override
@@ -90,13 +92,47 @@ public class WidgetService extends Service {
         width = windowManager.getDefaultDisplay().getWidth();
 
         duration = 1000/(intent.getIntExtra("speed", -1));
-
+        selected = intent.getStringExtra("character");
 
         img = (ImageView)mFloatingView.findViewById((R.id.gif_image));
 
         ani_image = new AnimationDrawable();
 
-        selectCerberus();
+        //Log.e("character:",selected);
+        switch(selected)
+        {
+            case "Azazel":
+                selectAzazel();
+                break;
+            case "Cerberus":
+                selectCerberus();
+                break;
+            case "Judgement":
+                selectJudgement();
+                break;
+            case "Justice":
+                selectJustice();
+                break;
+            case "Lucifer":
+                selectLucifer();
+                break;
+            case "Lucifer_Apron":
+                selectLucifer_Apron();
+                break;
+            case "Malina":
+                selectMalina();
+                break;
+            case "Modeus":
+                selectModeus();
+                break;
+            case "Pandemonica":
+                selectPandemonica();
+                break;
+            case "Zdrada":
+                selectZdrada();
+                break;
+        }
+
 
         img.setBackgroundDrawable(ani_image);
         ani_image.start();
@@ -181,9 +217,98 @@ public class WidgetService extends Service {
         return START_STICKY;
     }
 
+    private void selectAzazel() {
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.azazel);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
+    }
+
     private void selectCerberus() {
 
         TypedArray typedArray = getResources().obtainTypedArray(R.array.cerberus);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
+    }
+
+    private void selectJudgement() {
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.judgement);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
+    }
+
+    private void selectJustice() {
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.justice);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
+    }
+
+    private void selectLucifer() {
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.lucifer);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
+    }
+
+    private void selectLucifer_Apron() {
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.lucifer_apron);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
+    }
+
+    private void selectMalina() {
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.malina);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
+    }
+
+    private void selectModeus() {
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.modeus);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
+    }
+
+    private void selectPandemonica() {
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.pandemonica);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
+    }
+
+    private void selectZdrada() {
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.zdrada);
 
         for (int i =0; i< 12; i++)
         {

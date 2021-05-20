@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="select_character">
+        <item>Azazel</item>
+        <item>Cerberus</item>
+        <item>Judgement</item>
+        <item>Justice</item>
+        <item>Lucifer</item>
+        <item>Lucifer_Apron</item>
+        <item>Malina</item>
+        <item>Modeus</item>
+        <item>Pandemonica</item>
+        <item>Zdrada</item>
+    </string-array>
+</resources>

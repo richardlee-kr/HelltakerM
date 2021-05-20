@@ -2,32 +2,63 @@ package com.example.floatingwidget;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Build;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Button;
 import android.view.View;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button buttonAddWidget; //Buttono to Add Widget
+    SeekBar frame_bar; //frame speed controller
+    TextView frame_text; //frame speed text
+    Button addButtonWidget; //Button to Add Widget
+
+    int frameSpeed = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        buttonAddWidget = (Button) findViewById(R.id.button_widget); //find the button in layout
+        frame_bar = (SeekBar) findViewById(R.id.frame_speed);
+        frame_text = (TextView) findViewById(R.id.frame_speed_text);
+        addButtonWidget = (Button) findViewById(R.id.button_widget); //find the button in layout
 
+        frame_bar.incrementProgressBy(1);
 
         getPermission(); //try to get overlay permission
 
-        buttonAddWidget.setOnClickListener(new View.OnClickListener() { //Button Click Event
+        frame_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress <= 0)
+                {
+                    progress = 1;
+                }
+                frame_text.setText("FrameSpeed: "+progress);
+                frameSpeed = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        addButtonWidget.setOnClickListener(new View.OnClickListener() { //Button Click Event
             @Override
             public void onClick(View view) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //if current version is higher than Marshmallow (6.0)
@@ -38,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     else //if overlay permission
                     {
                         Intent intent = new Intent(MainActivity.this, WidgetService.class); //create intent of WidgetService
+                        intent.putExtra("speed", frameSpeed); //frame Speed transmit
                         startService(intent); //start Widget
                         finish(); //end MainActivity
                     }

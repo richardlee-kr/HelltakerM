@@ -21,10 +21,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/frame_speed"
         android:layout_width="208dp"
         android:layout_height="21dp"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="297dp" />
+        android:layout_marginStart="101dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="297dp"
+        android:layout_marginEnd="102dp"
+        android:layout_marginRight="102dp"
+        android:layout_marginBottom="22dp"
+        android:max="120"
+        android:progress="30"
+        app:layout_constraintBottom_toTopOf="@+id/button_widget"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/frame_speed_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="270dp"
+        android:text="FrameSpeed: 30"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/frame_speed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

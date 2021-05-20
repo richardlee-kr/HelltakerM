@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
@@ -27,14 +28,13 @@ public class WidgetService extends Service {
     View mFloatingView;
     WindowManager windowManager;
     ImageView imageClose;
+
     ImageView img;
     AnimationDrawable ani_image;
+
     float height, width;
 
-    static int counter = 0;
-
-    volatile int duration = 30;
-    Animation anim;
+    int duration = 25;
 
     @Nullable
     @Override
@@ -89,32 +89,18 @@ public class WidgetService extends Service {
         height = windowManager.getDefaultDisplay().getHeight();
         width = windowManager.getDefaultDisplay().getWidth();
 
+        duration = 1000/(intent.getIntExtra("speed", -1));
+
 
         img = (ImageView)mFloatingView.findViewById((R.id.gif_image));
+
         ani_image = new AnimationDrawable();
 
-        TypedArray typedArray = getResources().obtainTypedArray(R.array.cerberus);
-
-        for (int i =0; i< 12; i++)
-        {
-            ani_image.addFrame(typedArray.getDrawable(i),duration);
-        }
+        selectCerberus();
 
         img.setBackgroundDrawable(ani_image);
         ani_image.start();
-        //Glide.with(WidgetService.this).load(R.raw.cerberus_150).into(imageGIF);
 
-
-//        TimerTask tt = new TimerTask() {
-//            @Override
-//            public void run() {
-//                //Log.e("count: ", String.valueOf(counter));
-//                counter++;
-//            }
-//        };
-//
-//        Timer timer = new Timer();
-//        timer.schedule(tt,0,100);
 
         //show&update current time in textview
         Handler handler = new Handler();
@@ -193,6 +179,16 @@ public class WidgetService extends Service {
         });
 
         return START_STICKY;
+    }
+
+    private void selectCerberus() {
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.cerberus);
+
+        for (int i =0; i< 12; i++)
+        {
+            ani_image.addFrame(typedArray.getDrawable(i),duration);
+        }
     }
 
 

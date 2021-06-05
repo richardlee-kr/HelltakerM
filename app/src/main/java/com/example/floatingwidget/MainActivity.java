@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Build;
@@ -23,7 +26,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Playable{
 
     SeekBar frame_bar; //frame speed controller
     TextView frame_text; //frame speed text
@@ -32,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
     Button addButtonWidget; //Button to Add Widget
     ImageButton play;
-    TextView title;
 
     List<Track> tracks;
+
+    int position = 0;
+    boolean isPlaying = false;
 
     NotificationManager notificationManager;
 
@@ -48,15 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
         populateTracks();
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        //if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
             createChannel();
+            registerReceiver(broadCastReceiver, new IntentFilter("TRACKS_TRACKS"));
+            startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
         }
 
         frame_bar = (SeekBar) findViewById(R.id.frame_speed);
         frame_text = (TextView) findViewById(R.id.frame_speed_text);
 
-        title = (TextView) findViewById(R.id.title);
 
         character_select = (Spinner) findViewById(R.id.character_list);
 
@@ -104,7 +110,14 @@ public class MainActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateNotification.createNotification(MainActivity.this, tracks.get(0), R.drawable.ic_baseline_pause_24, 1, tracks.size() - 1);
+                if(isPlaying)
+                {
+                    onTrackPause();
+                }
+                else
+                {
+                    onTrackPlay();
+                }
             }
         });
 
@@ -121,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, WidgetService.class); //create intent of WidgetService
                         intent.putExtra("speed", frameSpeed); //frame Speed transmit
                         intent.putExtra("character", character);
-                        //startService(intent); //start Widget
+                        startService(intent); //start Widget
                         //finish(); //end MainActivity
                     }
                 }
@@ -157,10 +170,78 @@ public class MainActivity extends AppCompatActivity {
     {
         tracks = new ArrayList<>();
 
-        tracks.add(new Track("Track 1", "Artist 1", R.drawable.vitality));
+        tracks.add(new Track("Vitality", "Mittsies", R.drawable.vitality));
+        tracks.add(new Track("Apropos", "Mittsies", R.drawable.apropos));
+        tracks.add(new Track("Epitomize", "Mittsies", R.drawable.epitomize));
+        tracks.add(new Track("Luminescent", "Mittsies", R.drawable.luminescent ));
+
     }
 
-//    @Override
+    BroadcastReceiver broadCastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getExtras().getString("actionname");
+
+            switch(action)
+            {
+                case CreateNotification.ACTION_PREVIOUS:
+                    onTrackPrevious();
+                    break;
+                case CreateNotification.ACTION_PLAY:
+                    if(isPlaying)
+                    {
+                        onTrackPause();
+                    }
+                    else
+                    {
+                        onTrackPlay();
+                    }
+                    break;
+                case CreateNotification.ACTION_NEXT:
+                    onTrackNext();
+                    break;
+            }
+        }
+    };
+
+    @Override
+    public void onTrackPrevious() {
+        position--;
+        CreateNotification.createNotification(MainActivity.this, tracks.get(position), R.drawable.ic_baseline_pause_24, position, tracks.size() -1);
+    }
+
+    @Override
+    public void onTrackPlay() {
+        CreateNotification.createNotification(MainActivity.this, tracks.get(position), R.drawable.ic_baseline_pause_24, position, tracks.size() -1);
+        play.setImageResource(R.drawable.ic_baseline_pause_24);
+        isPlaying = true;
+    }
+
+    @Override
+    public void onTrackPause() {
+        CreateNotification.createNotification(MainActivity.this, tracks.get(position), R.drawable.ic_baseline_play_arrow_24, position, tracks.size() - 1);
+        play.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+        isPlaying = false;
+    }
+
+    @Override
+    public void onTrackNext() {
+        position++;
+        CreateNotification.createNotification(MainActivity.this, tracks.get(position), R.drawable.ic_baseline_pause_24, position, tracks.size() -1);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            notificationManager.cancelAll();
+        }
+
+        //unregisterReceiver(broadCastReceiver);
+    }
+
+    //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
 //        if(requestCode == 1)
